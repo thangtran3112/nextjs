@@ -1,23 +1,9 @@
+"use client";
 import ImagePicker from "@/components/meals/image-picker";
 import classes from "./page.module.css";
+import { shareMeal } from "@/lib/actions";
 
 export default function ShareMealPage() {
-  //when the form is submitted, Next will send API call to call this function
-  async function shareMeal(formData) {
-    "use server"; //function only executes on the server, async is required
-
-    const meal = {
-      title: formData.get("title"), //title is the name of the input field
-      summary: formData.get("summary"),
-      image: formData.get("image"), //name must be passed to <ImagePicker>
-      instructions: formData.get("instructions"),
-      creator: formData.get("name"),
-      creator_email: formData.get("email"),
-    };
-
-    console.log(meal);
-  }
-
   return (
     <>
       <header className={classes.header}>
