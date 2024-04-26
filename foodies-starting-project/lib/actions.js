@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { saveMeal } from "./meals";
+import { revalidatePath } from "next/cache";
 
 function isInvalidText(text) {
   return !text || text.trim() === "";
@@ -44,5 +45,13 @@ export async function shareMeal(prevState, formData) {
   }
 
   await saveMeal(meal);
+  /*
+  tell NextJS to revalidate 'meals' path without using pre-rendering cached page.
+  this is useful for Production deployments, where Next caches pages aggressively
+  revalidatePath("/meals", "page"); //revalidate only meals/page.js
+  revalidatePath("/meals", "layout"); //this would revalidate all pages nested with layout
+  revalidatePath("/", "layout"); //this will revalidate all pages, nested under root layout
+  */
+  revalidatePath("/meals"); //revalidate only meals page
   redirect("/meals");
 }

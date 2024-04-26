@@ -2,12 +2,16 @@ import sql from "better-sqlite3";
 import slugify from "slugify";
 import xss from "xss";
 import fs from "node:fs";
+import { S3 } from "@aws-sdk/client-s3";
 
-const db = sql("meals.db");
+const s3 = new S3({
+  region: "us-west-2",
+});
+const db = sql("meals.db"); // <- this was already there!
 
 export async function getMeals() {
   //artificial delay to test loading
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 500));
   return db.prepare("SELECT * FROM meals").all();
 }
 
@@ -18,21 +22,23 @@ export function getMeal(slug) {
 
 export async function saveMeal(meal) {
   meal.slug = slugify(meal.title, { lower: true });
-  //clean and sanitize the instructions to avoid cross site scripting
   meal.instructions = xss(meal.instructions);
 
   const extension = meal.image.name.split(".").pop();
   const fileName = `${meal.slug}.${extension}`;
 
-  const stream = fs.createWriteStream(`public/images/${fileName}`);
   const bufferedImage = await meal.image.arrayBuffer();
-  stream.write(Buffer.from(bufferedImage), (error) => {
-    if (error) throw new Error("Failed to save image");
+
+  s3.putObject({
+    Bucket: "nextjs-foodies-images",
+    Key: fileName,
+    Body: Buffer.from(bufferedImage),
+    ContentType: meal.image.type,
   });
 
   //after saving image to public folder, we do not need 'public' in image path
   //by default public folder will be exposed and we can access images just from /images
-  meal.image = `/images/${fileName}`;
+  meal.image = fileName;
   //Notes: Order of properties in (@) must match the order in (title, summary, instructions, creator, creator_email, image, slug)
   db.prepare(
     `
