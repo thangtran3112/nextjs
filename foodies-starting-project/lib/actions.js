@@ -11,8 +11,9 @@ function isInvalidText(text) {
  * We can not add 'use server'; directive inside a component
  * which already has a 'use client' directive
  * But we can export a server action,into a component which uses 'use client'
+ * prevState will be in format { message : sth}
  */
-export async function shareMeal(formData) {
+export async function shareMeal(prevState, formData) {
   const meal = {
     title: formData.get("title"), //title is the name of the input field
     summary: formData.get("summary"),
@@ -34,7 +35,12 @@ export async function shareMeal(formData) {
     !meal.image ||
     meal.image.size === 0
   ) {
-    throw new Error("Invalid meal inputs");
+    // or throw new Error("Invalid meal inputs");
+
+    //response can be in any form, but it must be serializable. No method insides
+    return {
+      message: "Invalid meal inputs",
+    };
   }
 
   await saveMeal(meal);
