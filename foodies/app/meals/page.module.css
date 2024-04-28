@@ -12,7 +12,8 @@
 }
 
 .highlight {
-  background: linear-gradient(90deg, #f9572a, #ff8a05);
+  background: linear-gradient(90deg, #9a38dc, #db30a8);
+  background: linear-gradient(90deg, #ed4781, #d31b4f);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -27,7 +28,8 @@
   margin-top: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  background: linear-gradient(90deg, #f9572a, #ff9b05);
+  background: linear-gradient(90deg, #9a38dc, #db30a8);
+  background: linear-gradient(90deg, #ed4781, #d31b4f);
   color: #ffffff;
   font-weight: bold;
   text-decoration: none;
