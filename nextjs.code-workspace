@@ -12,6 +12,7 @@
     "npm-intellisense.importQuotes": "'",
     "npm-intellisense.importLinebreak": ";\r\n",
     "npm-intellisense.importDeclarationType": "const",
-    "npm-intellisense.scanDevDependencies": true
+    "npm-intellisense.scanDevDependencies": true,
+    "liveServer.settings.multiRootWorkspaceName": "foodies-starting-project"
   }
 }
