@@ -4,7 +4,10 @@
       "path": "./first-app"
     },
     {
-      "path": "./foodies-starting-project"
+      "path": "./foodies"
+    },
+    {
+      "path": "./next-router-app"
     }
   ],
   "settings": {
@@ -13,6 +16,6 @@
     "npm-intellisense.importLinebreak": ";\r\n",
     "npm-intellisense.importDeclarationType": "const",
     "npm-intellisense.scanDevDependencies": true,
-    "liveServer.settings.multiRootWorkspaceName": "foodies-starting-project"
+    "liveServer.settings.multiRootWorkspaceName": "foodies"
   }
 }
