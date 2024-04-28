@@ -4,6 +4,11 @@ import classes from "./page.module.css";
 import Link from "next/link";
 import { getMeals } from "@/lib/meals";
 
+export const metadata = {
+  title: "All Meals",
+  description: "Browse a list of our favorite recipes",
+};
+
 /**
  * Separate data fetching component from the rendering component
  * We can use Suspense to show a loading indicator while the data is being fetched

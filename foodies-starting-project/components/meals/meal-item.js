@@ -11,7 +11,7 @@ export default function MealItem({ title, slug, image, summary, creator }) {
           {/* When the image is from database, NextJS will not be able to derive */}
           {/* width and height at build time. We need to use fill here. */}
           <Image
-            src={`https://nextjs-foodies-images.s3.us-west-2.amazonaws.com/${image}`}
+            src={`${process.env.BUCKET_HTTP_URL}/${image}`}
             alt={title}
             fill
           />
