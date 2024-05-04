@@ -6,6 +6,7 @@
 export function GET(request) {
   console.log(request);
   // return Response.json();
+  //path: locahost:3000/api
   return new Response("Hello");
 }
 
