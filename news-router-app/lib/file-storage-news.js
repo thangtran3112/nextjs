@@ -3,12 +3,8 @@ import { DUMMY_NEWS } from "@/dummy-news";
 
 const db = sql("data.db"); //relative to root folder
 
-export async function getAllNews() {
-  const news = db.prepare("SELECT * FROM news").all();
-
-  //artificial delay to test loading, despite this getAllNews is syncronous operation
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  return news;
+export function getAllNews() {
+  return DUMMY_NEWS;
 }
 
 export function getLatestNews() {
