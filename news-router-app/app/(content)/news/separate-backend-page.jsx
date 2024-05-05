@@ -1,5 +1,4 @@
 import NewsList from "@/components/news-list";
-// import { DUMMY_NEWS } from "@/dummy-news";
 export default async function NewsPage() {
   //NextJs extend fetch and add caching from NodeJs fetch
   const response = await fetch("http://localhost:8080/news");
