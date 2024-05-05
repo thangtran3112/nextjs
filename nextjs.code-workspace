@@ -8,6 +8,9 @@
     },
     {
       "path": "./news-router-app"
+    },
+    {
+      "path": "./blogs-mutation"
     }
   ],
   "settings": {
