@@ -1,8 +1,9 @@
 "use server";
-import { storePost } from "@/lib/posts";
+import { storePost, updatePostLikeStatus } from "@/lib/posts";
 import { redirect } from "next/navigation";
 import { CONTENT, IMAGE, TITLE } from "@/constants";
 import { uploadImage } from "@/lib/cloudinary";
+import { revalidatePath } from "next/cache";
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/FormData
  * React form does extend from html Form with some extra features
@@ -50,4 +51,9 @@ export async function createPost(prevState, formData) {
   });
 
   redirect("/feed");
+}
+
+export async function togglePostLikeStatus(postId) {
+  await updatePostLikeStatus(postId, 2);
+  revalidatePath("/", "layout"); //revalidate all pages consuming the layout from root
 }
