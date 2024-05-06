@@ -2,6 +2,7 @@
 import { storePost } from "@/lib/posts";
 import { redirect } from "next/navigation";
 import { CONTENT, IMAGE, TITLE } from "@/constants";
+import { uploadImage } from "@/lib/cloudinary";
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/FormData
  * React form does extend from html Form with some extra features
@@ -32,9 +33,17 @@ export async function createPost(prevState, formData) {
   }
 
   // console.log({ title, image, content });
+  let imageUrl;
+  try {
+    imageUrl = await uploadImage(image);
+  } catch (error) {
+    throw new Error(
+      "Image upload failed, post was not created. Please try again."
+    );
+  }
 
   await storePost({
-    imageUrl: "",
+    imageUrl: imageUrl,
     title,
     content,
     userId: 1,
