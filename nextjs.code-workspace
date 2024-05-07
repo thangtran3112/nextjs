@@ -11,6 +11,9 @@
     },
     {
       "path": "./blogs-mutation"
+    },
+    {
+       "path" : "./message-cache"
     }
   ],
   "settings": {
