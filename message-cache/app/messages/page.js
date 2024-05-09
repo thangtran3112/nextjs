@@ -1,4 +1,5 @@
 import Messages from "@/components/messages";
+import { getMessages } from "@/lib/messages";
 export const TAG = "msg";
 // import { unstable_noStore } from "next/cache";
 
@@ -12,6 +13,7 @@ export default async function MessagesPage() {
   //another way to disable caching, for all requests under this component
   // unstable_noStore();
 
+  /* Caching with Node `fetch`, which is overrided by next
   const response = await fetch("http://localhost:8080/messages", {
     // headers: {
     //   "X-ID": "page",
@@ -20,6 +22,10 @@ export default async function MessagesPage() {
     next: { tags: [TAG] },
   });
   const messages = await response.json();
+  */
+
+  //controll caching without Next `fetch`
+  const messages = getMessages(); //directly deal with database
 
   if (!messages || messages.length === 0) {
     return <p>No messages found</p>;

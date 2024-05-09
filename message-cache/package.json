@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:no-cache": "rm -rf .next && next dev",
-    "build": "rm -rf .next && next build",
+    "clean:cache": "rm -rf .next",
+    "dev:clean": "npm run clean:cache && next dev",
+    "build": "npm run clean:cache && next build",
     "start": "next start",
     "lint": "next lint"
   },

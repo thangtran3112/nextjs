@@ -21,7 +21,7 @@ export default function NewMessagePage() {
     // revalidatePath("/", "layout");
 
     //revalidate requests, tagged with "msg". Must setup next: { tags: ["msg"] } inside each request
-    revalidateTag(TAG);
+    // revalidateTag(TAG);
 
     redirect("/messages");
   }
