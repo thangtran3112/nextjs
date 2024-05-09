@@ -18,7 +18,7 @@ export default async function MessagesLayout({ children }) {
   );
   const messages = await response.json();*/
 
-  const messages = getMessages();
+  const messages = await getMessages();
   const totalMessages = messages.length;
 
   return (
