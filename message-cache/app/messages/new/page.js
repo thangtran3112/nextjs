@@ -1,14 +1,29 @@
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
-import { addMessage } from '@/lib/messages';
+import { addMessage } from "@/lib/messages";
+import { revalidateTag } from "next/cache";
+import { TAG } from "../page";
 
 export default function NewMessagePage() {
   async function createMessage(formData) {
-    'use server';
+    "use server";
 
-    const message = formData.get('message');
+    const message = formData.get("message");
     addMessage(message);
-    redirect('/messages');
+
+    //revalidate all nested path under /messages
+    // revalidatePath("/messages", "layout"); //another way to revalidate
+
+    //revalidate only /messages but not nested children routes
+    // revalidatePath("/messages");
+
+    //revalidate all routes
+    // revalidatePath("/", "layout");
+
+    //revalidate requests, tagged with "msg". Must setup next: { tags: ["msg"] } inside each request
+    revalidateTag(TAG);
+
+    redirect("/messages");
   }
 
   return (
