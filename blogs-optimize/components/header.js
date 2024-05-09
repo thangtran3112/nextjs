@@ -6,7 +6,14 @@ export default function Header() {
   return (
     <header id="main-header">
       <Link href="/">
-        <Image src={logo} alt="Mobile phone with posts feed on it" />
+        <Image
+          src={logo}
+          // width={100}
+          // height={100}
+          sizes="10vw" //resizing to 10% of viewport width (recommended if unknown size)
+          alt="Mobile phone with posts feed on it"
+          priority //always preload the image, instead of lazy loading
+        />
       </Link>
       <nav>
         <ul>
