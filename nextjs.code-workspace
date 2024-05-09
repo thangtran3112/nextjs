@@ -14,6 +14,9 @@
     },
     {
        "path" : "./message-cache"
+    },
+    {
+       "path" : "./blogs-optimize"
     }
   ],
   "settings": {
