@@ -25,7 +25,7 @@ export default async function MessagesPage() {
   */
 
   //controll caching without Next `fetch`
-  const messages = getMessages(); //directly deal with database
+  const messages = await getMessages(); //directly deal with database
 
   if (!messages || messages.length === 0) {
     return <p>No messages found</p>;
