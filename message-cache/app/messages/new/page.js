@@ -14,14 +14,16 @@ export default function NewMessagePage() {
     //revalidate all nested path under /messages
     // revalidatePath("/messages", "layout"); //another way to revalidate
 
-    //revalidate only /messages but not nested children routes
+    //revalidate only /messages but not nested children routes.
+    // Work with both fetch and custom unstable_cache for custom data sources
     // revalidatePath("/messages");
 
     //revalidate all routes
-    // revalidatePath("/", "layout");
+    //revalidatePath("/", "layout");
 
     //revalidate requests, tagged with "msg". Must setup next: { tags: ["msg"] } inside each request
-    // revalidateTag(TAG);
+    // Work with both fetch and custom unstable_cache for custom data sources
+    revalidateTag(TAG);
 
     redirect("/messages");
   }
