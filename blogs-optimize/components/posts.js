@@ -6,11 +6,35 @@ import { formatDate } from "@/lib/format";
 import LikeButton from "./like-icon";
 import { togglePostLikeStatus } from "@/actions/posts";
 
+/**
+ * Cloudinary provide image transformation through Url
+ * It can add watermark, crop image, resize, etc
+ * https://cloudinary.com/documentation/image_transformations
+ */
+function imageLoader(config) {
+  // console.log(config);
+  //Example: https://res.cloudinary.com/demo/image/upload/c_thumb,g_face,h_200,w_200/r_max/f_auto/woman-blackdress-stairs.png
+  const urlStart = config.src.split("upload/")[0];
+  const urlEnd = config.src.split("upload/")[1];
+  //ensure load smaller image, for avatar need, auto crop image to width 200
+  const transformations = `w_200,q_${config.quality}`;
+
+  return `${urlStart}upload/${transformations}/${urlEnd}`;
+}
+
 function Post({ post, action }) {
   return (
     <article className="post">
       <div className="post-image">
-        <Image src={post.image} fill alt={post.title} />
+        <Image
+          loader={imageLoader}
+          src={post.image}
+          width={200}
+          height={150} //doesnt matter because we apply CSS to enforce size in global css
+          //option to use `fill` as well, if not using `width` and `height`
+          alt={post.title}
+          quality={80}
+        />
       </div>
       <div className="post-content">
         <header>
