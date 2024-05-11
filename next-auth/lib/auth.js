@@ -63,6 +63,8 @@ export async function verifyAuth() {
       );
     }
     if (!result.session) {
+      //Creates a new cookie with a blank value that expires immediately
+      //to delete the existing session cookie
       const sessionCookie = lucia.createBlankSessionCookie();
       cookies().set(
         sessionCookie.name,
@@ -73,4 +75,25 @@ export async function verifyAuth() {
   } catch {}
 
   return result;
+}
+
+export async function destroySession() {
+  const { session } = await verifyAuth();
+  if (!session) {
+    // or throw an Error here is fine
+    return {
+      error: "Unauthorized!",
+    };
+  }
+
+  await lucia.invalidateSession(session.id);
+
+  //Creates a new cookie with a blank value that expires immediately
+  //to delete the existing session cookie
+  const sessionCookie = lucia.createBlankSessionCookie();
+  cookies().set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes
+  );
 }
