@@ -2,9 +2,10 @@
 
 import { redirect } from "next/navigation";
 
-import { hashUserPassword } from "@/lib/hash";
-import { createUser } from "@/lib/user";
+import { hashUserPassword, verifyPassword } from "@/lib/hash";
+import { createUser, getUserByEmail } from "@/lib/user";
 import { createAuthSession } from "@/lib/auth";
+import { Login } from "@/lib/constants";
 
 export async function signup(_prevState, formData) {
   const email = formData.get("email");
@@ -21,6 +22,7 @@ export async function signup(_prevState, formData) {
   }
 
   if (Object.keys(errors).length > 0) {
+    //return the errors property to form state
     return {
       errors,
     };
@@ -43,4 +45,41 @@ export async function signup(_prevState, formData) {
     }
     throw error;
   }
+}
+
+export async function login(_prevState, formData) {
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  const existingUser = getUserByEmail(email);
+
+  if (!existingUser) {
+    return {
+      errors: {
+        email: "Could not authenticate user, please check your credentials.",
+      },
+    };
+  }
+
+  const isValidPassword = verifyPassword(existingUser.password, password);
+
+  if (!isValidPassword) {
+    //return the errors property to form state
+    return {
+      errors: {
+        password: "Could not authenticate user, please check your credentials.",
+      },
+    };
+  }
+
+  //create a session if the credentials are valid, and bind its to Cookies (HttpOn)
+  await createAuthSession(existingUser.id);
+  redirect("/training");
+}
+
+export async function auth(mode, prevState, formData) {
+  if (mode === Login) {
+    return login(prevState, formData);
+  }
+  return signup(prevState, formData);
 }
