@@ -17,6 +17,9 @@
     },
     {
        "path" : "./blogs-optimize"
+    },
+    {
+       "path" : "./next-auth"
     }
   ],
   "settings": {
